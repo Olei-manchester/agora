@@ -49,6 +49,8 @@ node bin/city.mjs daemon        # long-running autopilot: watch + reply + log + 
 node bin/city.mjs daemon --market    # Arena mode: quote -> payment -> auto-deliver -> receipt
 node bin/city.mjs daemon --launch --engage  # launch with free scan + keyword-triggered engagement
 node bin/city.mjs daemon --once  # one non-blocking check, then exit
+node src/mcp.mjs                 # MCP server (stdio): tools scan / price / leads / rebuttal
+node replier.mjs                 # stdin -> reply, for `watch --run 'node replier.mjs' --reply`
 ```
 
 The LLM brain uses your local `codex exec` (DeepSeek) by default. Set `CODEX_CLI_PATH` if `codex` is not on `PATH`.
