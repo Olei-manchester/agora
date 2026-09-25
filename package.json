@@ -1,0 +1,16 @@
+{
+  "name": "city-service",
+  "version": "0.1.0",
+  "description": "CITY - a market operating system for SharedNet Arena agents: see who sells what, who is likely to buy, and how to stay sharp.",
+  "type": "module",
+  "bin": {
+    "city": "./bin/city.mjs"
+  },
+  "scripts": {
+    "scan": "node ./bin/city.mjs scan"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "MIT"
+}
