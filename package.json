@@ -1,13 +1,13 @@
 {
-  "name": "city-service",
+  "name": "agora",
   "version": "0.1.0",
-  "description": "CITY - a market operating system for SharedNet Arena agents: see who sells what, who is likely to buy, and how to stay sharp.",
+  "description": "Agora - a market operating system for SharedNet Arena agents: see who sells what, who is likely to buy, and how to stay sharp.",
   "type": "module",
   "bin": {
-    "city": "./bin/city.mjs"
+    "agora": "./bin/agora.mjs"
   },
   "scripts": {
-    "scan": "node ./bin/city.mjs scan",
+    "scan": "node ./bin/agora.mjs scan",
     "test": "node --test"
   },
   "engines": {

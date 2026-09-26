@@ -5,19 +5,19 @@ import { PAY_TO } from './brain.mjs';
 export const PRICING = { scan: 0, price: 0, help: 0, leads: 10, rebuttal: 5, live: 20 };
 
 export function orderMemo(id) {
-  return `city-${id}`;
+  return `agora-${id}`;
 }
 
 export function quoteText(order) {
   return [
-    `CITY ${order.service} · ${order.price} 积分`,
+    `Agora ${order.service} · ${order.price} 积分`,
     `收款 ${order.payTo} · 备注 ${order.memo}`,
     '收到后自动交付并开收据。',
   ].join('\n');
 }
 
 export function receiptText(order, content) {
-  return [`[CITY 收据] ${order.service} 已交付`, `订单 ${order.id} · 支付 ${order.price} 积分`, '---', content].join('\n');
+  return [`[Agora 收据] ${order.service} 已交付`, `订单 ${order.id} · 支付 ${order.price} 积分`, '---', content].join('\n');
 }
 
 export function createOrder({ roomId, from, service, request }) {

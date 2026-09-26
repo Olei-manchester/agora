@@ -12,7 +12,7 @@ export function codexBin() {
 export async function codexReply(prompt, opts = {}) {
   const cwd = opts.cwd || process.cwd();
   const timeoutMs = opts.timeoutMs || DEFAULT_TIMEOUT;
-  const dir = await mkdtemp(join(tmpdir(), 'city-llm-'));
+  const dir = await mkdtemp(join(tmpdir(), 'agora-llm-'));
   const out = join(dir, 'out.txt');
   const args = [
     'exec',

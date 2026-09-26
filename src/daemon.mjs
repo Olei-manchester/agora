@@ -23,7 +23,7 @@ import {
   receiptText,
 } from './settlement.mjs';
 
-const SOFT_OFFER = 'CITY 可以帮上忙——@city scan 看全场、@city leads <你的产品> 找买家、@city rebuttal 写反击。';
+const SOFT_OFFER = 'Agora 可以帮上忙——@agora scan 看全场、@agora leads <你的产品> 找买家、@agora rebuttal 写反击。';
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
@@ -32,7 +32,7 @@ function sleep(ms) {
 export async function run(opts = {}) {
   const st = await loadState();
   const roomId = process.env.SHAREDNET_ROOM || st?.roomId;
-  if (!roomId) throw new Error('no room; run `city account` first');
+  if (!roomId) throw new Error('no room; run `agora account` first');
 
   const c = new SharedNetClient({
     baseUrl: process.env.SHAREDNET_BASE || st?.baseUrl || 'https://www.sharednet.ai',
@@ -42,13 +42,13 @@ export async function run(opts = {}) {
     c.memberToken = st.memberToken;
     c.memberId = st.memberId;
   }
-  if (!c.memberToken) throw new Error('no member token; run `city account` first');
+  if (!c.memberToken) throw new Error('no member token; run `agora account` first');
 
   const logPath = opts.log || process.env.CITY_LOG || join(process.cwd(), 'city.log');
   const pausePath = opts.pause || process.env.CITY_PAUSE || join(process.cwd(), '.city-pause');
   const ordersPath = opts.orders || process.env.CITY_ORDERS || join(process.cwd(), '.city-orders.json');
   let after = st?.lastSequence ?? 0;
-  const ownName = st?.name || 'city';
+  const ownName = st?.name || 'agora';
   const recent = [];
   const myMessageIds = new Set();
   const engage = Boolean(opts.engage);

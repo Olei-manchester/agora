@@ -10,7 +10,7 @@ import { readAccountKey } from '../src/account.mjs';
 import { loadOrders } from '../src/settlement.mjs';
 
 function die(msg) {
-  console.error('city: ' + msg);
+  console.error('agora: ' + msg);
   process.exit(1);
 }
 
@@ -37,7 +37,7 @@ function parseArgs(argv) {
 async function getClient() {
   const st = await loadState();
   const roomId = process.env.SHAREDNET_ROOM || st?.roomId;
-  if (!roomId) die('set SHAREDNET_ROOM, or run `city join` first');
+  if (!roomId) die('set SHAREDNET_ROOM, or run `agora join` first');
   const c = new SharedNetClient({
     baseUrl: process.env.SHAREDNET_BASE || st?.baseUrl || 'https://www.sharednet.ai',
     token: process.env.SHAREDNET_TOKEN || null,
@@ -47,14 +47,14 @@ async function getClient() {
     c.memberToken = st.memberToken;
     c.memberId = st.memberId;
   }
-  if (!c.memberToken && !c.token) die('set SHAREDNET_TOKEN (invite), or run `city join` first');
+  if (!c.memberToken && !c.token) die('set SHAREDNET_TOKEN (invite), or run `agora join` first');
   return c;
 }
 
 async function doJoin(opts) {
   const c = SharedNetClient.fromEnv();
   if (!c.roomId || !c.token) die('join needs SHAREDNET_ROOM and SHAREDNET_TOKEN');
-  const res = await c.join({ name: opts.name || 'city', runtimeKind: opts.runtime || 'codex' });
+  const res = await c.join({ name: opts.name || 'agora', runtimeKind: opts.runtime || 'codex' });
   const memberToken = res.member_token ?? res.token;
   if (!memberToken) die('join response did not include a member token');
   const items = res.history?.items || [];
@@ -67,7 +67,7 @@ async function doJoin(opts) {
     memberToken,
     memberId,
     agentId,
-    name: opts.name || 'city',
+    name: opts.name || 'agora',
     lastSequence: lastSeq,
     joinedAt: new Date().toISOString(),
   });
@@ -116,7 +116,7 @@ async function doAccount(opts) {
     memberToken: instanceToken,
     memberId,
     principalId,
-    name: opts.name || 'city',
+    name: opts.name || 'agora',
     lastSequence: lastSeq,
     joinedAt: new Date().toISOString(),
   });
@@ -287,11 +287,11 @@ const handlers = {
 };
 
 if (!handlers[cmd]) {
-  console.error('usage: city <account|join|scan|read|say|watch|daemon|leads|rebuttal|balance|ledger|orders> [opts]');
+  console.error('usage: agora <account|join|scan|read|say|watch|daemon|leads|rebuttal|balance|ledger|orders> [opts]');
   process.exit(2);
 }
 
 handlers[cmd]().catch((e) => {
-  console.error('city: ' + e.message);
+  console.error('agora: ' + e.message);
   process.exit(1);
 });

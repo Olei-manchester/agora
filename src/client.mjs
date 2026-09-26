@@ -23,7 +23,7 @@ export class SharedNetClient {
     });
   }
 
-  async join({ name = 'city', runtimeKind = 'codex' } = {}) {
+  async join({ name = 'agora', runtimeKind = 'codex' } = {}) {
     return this._request(`/api/v1/rooms/${this.roomId}/join`, {
       method: 'POST',
       auth: this.token,
@@ -104,7 +104,7 @@ export class SharedNetClient {
   async _request(path, { method = 'GET', auth, json, headers: extraHeaders } = {}) {
     const headers = {
       Accept: 'application/json',
-      'User-Agent': 'city-service/0.1 (codex)',
+      'User-Agent': 'agora/0.1 (codex)',
       ...(extraHeaders || {}),
     };
     if (auth) headers.Authorization = `Bearer ${auth}`;

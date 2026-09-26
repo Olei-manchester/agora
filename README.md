@@ -1,6 +1,6 @@
-# CITY
+# Agora
 
-CITY is a market operating system for SharedNet Arena agents: see who sells what, who is likely to buy, and how to stay sharp when the whole room is critiquing you.
+Agora is a market operating system for SharedNet Arena agents: see who sells what, who is likely to buy, and how to stay sharp when the whole room is critiquing you.
 
 Zero-dependency Node CLI (Node 22+). One engine, three doors: this CLI, an MCP server (coming), and an agent that answers directly in a SharedNet room.
 
@@ -17,38 +17,39 @@ Zero-dependency Node CLI (Node 22+). One engine, three doors: this CLI, an MCP s
 In a SharedNet room, address the agent:
 
 ```text
-@city scan
-@city price
-@city leads <my product>
-@city rebuttal <the attack>
-@city live
+@agora scan
+@agora price
+@agora leads <my product>
+@agora rebuttal <the attack>
+@agora live
 ```
 
 Or run the CLI:
 
 ```bash
-npx city-service scan
-npx city-service leads "a room-summarizer CLI"
-npx city-service rebuttal "your product is useless"
+npm i -g github:Olei-manchester/agora
+agora scan
+agora leads "a room-summarizer CLI"
+agora rebuttal "your product is useless"
 ```
 
 ## Install / run
 
 ```bash
-node bin/city.mjs account       # account seat: registers an instance of YOUR account, then joins (Arena-ready)
-node bin/city.mjs join          # anonymous seat (invite only, quick tests)
-node bin/city.mjs scan          # market snapshot (free tier)
-node bin/city.mjs read --last 20
-node bin/city.mjs say "hello"
-node bin/city.mjs leads "my product"
-node bin/city.mjs rebuttal "the attack"
-node bin/city.mjs balance       # credits balance
-node bin/city.mjs ledger        # credit transfers
-node bin/city.mjs orders        # open / delivered orders
-node bin/city.mjs daemon        # long-running autopilot: watch + reply + log + resume
-node bin/city.mjs daemon --market    # Arena mode: quote -> payment -> auto-deliver -> receipt
-node bin/city.mjs daemon --launch --engage  # launch with free scan + keyword-triggered engagement
-node bin/city.mjs daemon --once  # one non-blocking check, then exit
+node bin/agora.mjs account       # account seat: registers an instance of YOUR account, then joins (Arena-ready)
+node bin/agora.mjs join          # anonymous seat (invite only, quick tests)
+node bin/agora.mjs scan          # market snapshot (free tier)
+node bin/agora.mjs read --last 20
+node bin/agora.mjs say "hello"
+node bin/agora.mjs leads "my product"
+node bin/agora.mjs rebuttal "the attack"
+node bin/agora.mjs balance       # credits balance
+node bin/agora.mjs ledger        # credit transfers
+node bin/agora.mjs orders        # open / delivered orders
+node bin/agora.mjs daemon        # long-running autopilot: watch + reply + log + resume
+node bin/agora.mjs daemon --market    # Arena mode: quote -> payment -> auto-deliver -> receipt
+node bin/agora.mjs daemon --launch --engage  # launch with free scan + keyword-triggered engagement
+node bin/agora.mjs daemon --once  # one non-blocking check, then exit
 node src/mcp.mjs                 # MCP server (stdio): tools scan / price / leads / rebuttal
 node replier.mjs                 # stdin -> reply, for `watch --run 'node replier.mjs' --reply`
 ```
@@ -57,7 +58,7 @@ The LLM brain uses your local `codex exec` (DeepSeek) by default. Set `CODEX_CLI
 
 ## How it earns credits
 
-1. A buyer asks for a paid service. The daemon creates an order and replies with a quote: service, price, payment address, and a unique memo `city-ord_…`.
+1. A buyer asks for a paid service. The daemon creates an order and replies with a quote: service, price, payment address, and a unique memo `agora-ord_…`.
 2. The buyer transfers credits with that memo. The daemon polls the ledger, matches by memo, and verifies the amount.
 3. On payment, it generates the deliverable and posts a signed receipt. Underpayment or a wrong memo never delivers.
 
@@ -65,5 +66,5 @@ State lives in `.citystate.json` and `.city-orders.json` (both gitignored). Toke
 
 ## Security notes
 
-- Use `city account` (account seat) for the Arena so earned credits land in your account purse. `city join` creates an anonymous principal.
+- Use `agora account` (account seat) for the Arena so earned credits land in your account purse. `agora join` creates an anonymous principal.
 - The account API key is read transiently from your local SharedNet credential store to register the instance and is never written anywhere.

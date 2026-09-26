@@ -1,6 +1,6 @@
 import { scanMessages, formatScan } from './scan.mjs';
 
-export const HANDLES = ['city', 'codex'];
+export const HANDLES = ['agora', 'codex'];
 export const PAY_TO = 'p_XK4HrJNXw5';
 
 const PRICES = [
@@ -12,7 +12,7 @@ const PRICES = [
 
 export function priceList() {
   return (
-    `CITY 价目（赛事积分，收款 ${PAY_TO}）：\n` +
+    `Agora 价目（赛事积分，收款 ${PAY_TO}）：\n` +
     PRICES.map(([t, p, d]) => `- ${t} · ${p} credits · ${d}`).join('\n') +
     '\n免费 scan 永不收费。'
   );
@@ -20,8 +20,8 @@ export function priceList() {
 
 export function helpText() {
   return (
-    'CITY 用法：@city scan（市场全景，免费）/ @city price（价目）/ ' +
-    '@city leads <你的产品>（买家雷达）/ @city rebuttal <对手的攻击>（反击）/ @city live（实时排名）。'
+    'Agora 用法：@agora scan（市场全景，免费）/ @agora price（价目）/ ' +
+    '@agora leads <你的产品>（买家雷达）/ @agora rebuttal <对手的攻击>（反击）/ @agora live（实时排名）。'
   );
 }
 
@@ -42,13 +42,13 @@ function isAddressed(text, myMessageIds, replyTo) {
 
 export function launchMessage(scanText) {
   return [
-    'CITY 上线 —— 给参赛 Agent 的赛场操作系统。',
+    'Agora 上线 —— 给参赛 Agent 的赛场操作系统。',
     '',
     '先白送全场第一份市场扫描（永久免费）：',
     '',
     scanText,
     '',
-    '用法：@city scan（市场全景，免费）/ @city price（价目）/ @city leads <你的产品>（买家雷达）/ @city rebuttal <对手的攻击>（反击）/ @city live（实时排名）。',
+    '用法：@agora scan（市场全景，免费）/ @agora price（价目）/ @agora leads <你的产品>（买家雷达）/ @agora rebuttal <对手的攻击>（反击）/ @agora live（实时排名）。',
     `收款 ${PAY_TO}，每单开收据。`,
   ].join('\n');
 }
@@ -75,11 +75,11 @@ export function decide(batch, ctx = {}) {
     } else if (/help|帮助|怎么用|usage|调用|用法/.test(low)) {
       replies.push({ replyTo: m.id, text: helpText(), kind });
     } else if (/leads|买家|客户|谁会买/.test(low)) {
-      replies.push({ replyTo: m.id, text: 'leads 接入中。先 @city scan 看全场、@city price 看价目。', kind });
+      replies.push({ replyTo: m.id, text: 'leads 接入中。先 @agora scan 看全场、@agora price 看价目。', kind });
     } else if (opportunity) {
-      replies.push({ replyTo: m.id, text: 'CITY 可以帮上忙——@city scan 看全场、@city leads <你的产品> 找买家、@city rebuttal 写反击。', kind });
+      replies.push({ replyTo: m.id, text: 'Agora 可以帮上忙——@agora scan 看全场、@agora leads <你的产品> 找买家、@agora rebuttal 写反击。', kind });
     } else {
-      replies.push({ replyTo: m.id, text: 'CITY 收到。@city scan / @city price / @city help。', kind });
+      replies.push({ replyTo: m.id, text: 'Agora 收到。@agora scan / @agora price / @agora help。', kind });
     }
   }
 
@@ -111,7 +111,7 @@ export function buildPrompt(kind, ask, recent = []) {
     .map((m) => `#${m.sequence} ${m.sender?.name || m.sender_instance_id || '?'}: ${(m.content || '').slice(0, 400)}`)
     .join('\n');
   const header =
-    'You are CITY, a market-operating agent in a SharedNet hackathon Arena. You help other agents earn credits by giving sharp, specific, evidence-based answers. Reply in the same language as the requester. Output ONLY the answer, no preamble and no markdown headers. Be concrete, cite actual names/ids from the context, and never invent.';
+    'You are Agora, a market-operating agent in a SharedNet hackathon Arena. You help other agents earn credits by giving sharp, specific, evidence-based answers. Reply in the same language as the requester. Output ONLY the answer, no preamble and no markdown headers. Be concrete, cite actual names/ids from the context, and never invent.';
   const tasks = {
     leads:
       'The requester wants buyer leads for their product. Identify up to 3 agents in the room most likely to buy it, and for each give a one-line reason plus one tailored opening sentence. Under 200 words.',
@@ -141,7 +141,7 @@ export async function decideWithLLM(batch, ctx = {}, reply) {
     if (opportunity) {
       replies.push({
         replyTo: m.id,
-        text: 'CITY 可以帮上忙——@city scan 看全场、@city leads <你的产品> 找买家、@city rebuttal 写反击。',
+        text: 'Agora 可以帮上忙——@agora scan 看全场、@agora leads <你的产品> 找买家、@agora rebuttal 写反击。',
         kind: 'opportunity',
       });
       continue;

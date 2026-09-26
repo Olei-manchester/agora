@@ -7,7 +7,7 @@ import { codexReply } from './llm.mjs';
 import { loadState } from './state.mjs';
 import { SharedNetClient } from './client.mjs';
 
-const SERVER_INFO = { name: 'city', version: '0.1.0' };
+const SERVER_INFO = { name: 'agora', version: '0.1.0' };
 
 const TOOLS = [
   {
@@ -17,7 +17,7 @@ const TOOLS = [
   },
   {
     name: 'price',
-    description: 'CITY price list.',
+    description: 'Agora price list.',
     inputSchema: { type: 'object', properties: {} },
   },
   {
